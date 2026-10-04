@@ -1,28 +1,39 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const userSchema = mongoose.Schema({
-    username: {
-        type: String,
-        required: [true, "Please add a name"],
-    },
-    email: {
-        type: String,
-        required: [true, "Please add an email"],
-        unique: true,
-    },
-    phone: {
-        type: String,
-        required: [true, "Please add a phone number"],
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: [true, "Please add a password"],
-    },
-   
-},
-{
-    timestamps: true,
-});
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+         type: String, 
+         required: true, 
+         trim: true
+        },
+    email: { 
+        type: String, 
+        unique: true, 
+        sparse: true, 
+        lowercase: true, 
+        trim: true 
+        },
+    phone: { 
+        type: String || Number, 
+        unique: true, 
+        sparse: true, 
+        trim: true 
+        },
+    password: { 
+        type: String, 
+        required: true
+        },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("User", userSchema);
+// // Require at least one contact method
+// userSchema.pre('validate', function (next) {
+//   if (!this.email && !this.phone) {
+//     return next(new Error('Either email or phone is required'));
+//   }
+//   next();
+// });
+
+export default mongoose.model('User', userSchema);

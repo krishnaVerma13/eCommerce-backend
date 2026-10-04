@@ -1,10 +1,11 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+import { connect as _connect } from 'mongoose';
+import dotenv from 'dotenv';
 
 const connectDB = async ()=>{
-    const uri = "mongodb+srv://admin:admin@diycluster.xea4j2y.mongodb.net/diyInfo?retryWrites=true&w=majority&appName=diyCluster"
+    
+    const uri = process.env.DB_CONNECTION_STR
     try {
-        const connect = await mongoose.connect(uri);
+        const connect = await _connect(uri);
         console.log("Database connected", connect.connection.host, connect.connection.name);
         // console.log(process.env.KRIS);
         
@@ -15,4 +16,4 @@ const connectDB = async ()=>{
     }
 }
 
-module.exports = connectDB;
+export default connectDB;

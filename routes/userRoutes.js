@@ -1,16 +1,12 @@
-const express = require('express');
-const router = express.Router();
-const { registerUser, loginUser, currentUser, FindUser,FindAllUser } = require('../controllers/userController');
-const validateToken = require('../middleware/validateTokenHandle');
+import { Router } from 'express';
+import { registerUser, loginUser } from '../controllers/userController.js';
 
-router.post('/register', registerUser)
+import validateToken from '../middleware/validateTokenHandle.js';
 
-router.post('/login', loginUser);
+const userRout = Router();
+userRout.post('/register', registerUser)
 
-router.get('/current',validateToken , currentUser);
+userRout.post('/login', loginUser);
 
-router.post('/finduser', FindUser);
 
-router.get('/findalluser', FindAllUser);
-
-module.exports = router;
+export default userRout;
